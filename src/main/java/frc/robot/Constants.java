@@ -160,6 +160,7 @@ public class Constants {
     public static final int PIVOT_ID = 47;
     public static final double CORAL_STATION_POSITION = 100;
     public static final double REEF_POSITION = 200;
+    public static final double LEVEL_FOUR_POSITION = -200;
     public static final double POSITION_THRESHOLD = 5;
     public static final int COUNTER_MAX_VALUE = 100;
     public static final double PID_P = 1;

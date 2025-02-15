@@ -143,7 +143,7 @@ public class RobotContainer {
     
     operatorDpadUp
       .onTrue(new GoToLevel(elevator, Constants.Elevator.LEVEL_FOUR_POSITION))
-      .onTrue(new AngleCoral(coralPivot, Constants.CoralPivot.REEF_POSITION));
+      .onTrue(new AngleCoral(coralPivot, Constants.CoralPivot.LEVEL_FOUR_POSITION));
     
     operatorDpadRight.onTrue(new GoToLevel(elevator, Constants.Elevator.LEVEL_THREE_POSITION))
       .onTrue(new AngleCoral(coralPivot, Constants.CoralPivot.REEF_POSITION));
