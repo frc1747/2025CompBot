@@ -60,10 +60,10 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(isAtTop() || isAtBottom()) setPower(0);
-    if(isAtBottom())elevator.setPosition(0);
-    SmartDashboard.putNumber("Elevator AbsPosition", getPosition());
-    SmartDashboard.putNumber("Elevator RelPosition", elevator.getPosition().getValueAsDouble());
+    if(isAtTop() && elevator.get() > 0) setPower(0);
+    if(isAtBottom() && elevator.get() < 0) setPower(0);
+    if(isAtBottom()) elevator.setPosition(0);
+    SmartDashboard.putNumber("Elevator Position", elevator.getPosition().getValueAsDouble());
     SmartDashboard.putBoolean("Bottom Limit Switch", isAtBottom());
     SmartDashboard.putBoolean("Top Limit Switch", isAtTop());
   }

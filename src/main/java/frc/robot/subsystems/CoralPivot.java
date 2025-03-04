@@ -13,6 +13,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -21,10 +22,12 @@ public class CoralPivot extends SubsystemBase {
   private SparkMax pivot;
   private SparkClosedLoopController controller;
   private SparkAbsoluteEncoder encoder;
+  private DigitalInput limitSwitch;
 
   public CoralPivot() {
     pivot = new SparkMax(Constants.CoralPivot.PIVOT_ID, MotorType.kBrushed);
     controller = pivot.getClosedLoopController();
+    limitSwitch = new DigitalInput(Constants.CoralPivot.LIMIT_SWITCH_CHANNEL);
     encoder = pivot.getAbsoluteEncoder();
     double p = Constants.CoralPivot.PID_P;
     double i = Constants.CoralPivot.PID_I;
@@ -57,8 +60,14 @@ public class CoralPivot extends SubsystemBase {
     controller.setReference(position, SparkBase.ControlType.kPosition);
   }
 
+  public boolean isSwitchPressed(){
+    return !limitSwitch.get();
+  }
+
   @Override
   public void periodic() {
+    if(isSwitchPressed() && pivot.get() > 0) setPivotPower(0);
     SmartDashboard.putNumber("Coral Pivot Encoder", getPosition());
+    SmartDashboard.putBoolean("Coral Pivot Limit", isSwitchPressed());
   }
 }
