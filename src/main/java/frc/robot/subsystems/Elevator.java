@@ -95,12 +95,17 @@ public class Elevator extends SubsystemBase {
     if (isAtTop()) { // will not ascend if top limit hit
       if (pow > 0) mult = 0.0;
     }
+    
     elevator.set(-pow * mult);
 
-    if(isAtBottom()) {
+    if (!isAtBottom() && this.bottomLimit) {
+      this.bottomLimit = false;
+    } else if (isAtBottom() && !this.bottomLimit) {
+      this.bottomLimit = true;
       elevator.setPosition(0);
       encoder.reset();
     }
+
     //System.out.println("Encoder: " + getPosition());
     SmartDashboard.putNumber("Elevator AbsPosition", getPosition());
     SmartDashboard.putNumber("Elevator RelPosition", elevator.getPosition().getValueAsDouble());
